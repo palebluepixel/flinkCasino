@@ -10,3 +10,48 @@ Start with `src/main/java/cardcountingdetector/jobs/CardCountingDetectionJob.jav
 3. Three player tasks. Each player consumes the count, and emits bets every time the count is updated. One player is a cheater, they make betting decisions based on the count. The two other players are "fairers", they ignore the count (but still consume the count stream so that getting a new count triggers them to bet).
 4. A card counting detector task. This task consumes the union of all player bets, as well as the count. It tracks each player's average bet and emits a cheating alert if any player is frequently betting high when the count is high and betting low when the count is low (compared to their average). 
 
+Example output (Player 1 is the cheater, the rest are fair):
+```
+Count: 0
+Player 1 bets 10
+Player 2 bets 15
+Player 3 bets 10
+Count: -1
+Player 1 bets 10
+Player 2 bets 18
+Player 3 bets 10
+Count: -2
+Player 1 bets 10
+Player 2 bets 24
+Player 3 bets 18
+Count: -2
+Player 1 bets 10
+Player 2 bets 10
+Player 3 bets 10
+...
+Count: 18
+Player 1 bets 36
+Player 2 bets 10
+Player 3 bets 10
+Count: 17
+Player 1 bets 34
+Player 2 bets 10
+Player 3 bets 10
+Count: 17
+Player 1 bets 34
+Player 2 bets 22
+Player 3 bets 15
+Count: 16
+Player 1 bets 32
+Player 2 bets 10
+Player 3 bets 11
+Count: 16
+Player 1 bets 32
+Player 2 bets 10
+Player 3 bets 19
+Count: 15
+Player 1 bets 30
+Player 2 bets 13
+Player 3 bets 10
+!!!!!!!!!! Player 1 IS CHEATING!!!!!!
+```
