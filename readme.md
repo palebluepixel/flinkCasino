@@ -4,7 +4,7 @@ Flink is a data stream processor. It has sources, which produce data (in this ex
 
 The purpose of this toy program is as a demonstration of how to use `KeyedCoProcessFunction`s, that is, functions which consume data from two different streams of data and keep track of state related to both. 
 
-Start with `jobs/CardCountingDetectionJob.java`. This is the job that we submit to the flink server. It creates a few things:
+Start with `src/main/java/cardcountingdetector/jobs/CardCountingDetectionJob.java`. This is the job that we submit to the flink server. It creates a few things:
 1. A source. This emits an endless stream of cards, simulating 10 regular 52 card decks combined together (just like how a casino would do it). When the deck runs out, a new set of 10 decks is shuffled. 
 2. A card counting task. This task consumes the cards and keeps track of the running count using a basic high/low system. Every time a new card is "dealt" by the source, it emits the count.
 3. Three player tasks. Each player consumes the count, and emits bets every time the count is updated. One player is a cheater, they make betting decisions based on the count. The two other players are "fairers", they ignore the count (but still consume the count stream so that getting a new count triggers them to bet).
